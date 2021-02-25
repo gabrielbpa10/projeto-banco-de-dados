@@ -4,4 +4,8 @@ public class Page {
 	
 	Object[] content;
 	Page next;
+	
+	public Page () {
+		
+	}
 }

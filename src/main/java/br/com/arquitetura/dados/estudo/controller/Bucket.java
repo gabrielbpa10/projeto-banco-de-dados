@@ -2,8 +2,16 @@ package br.com.arquitetura.dados.estudo.controller;
 
 public class Bucket {
 	
-	BucketUnit[] Content;
+	BucketUnit[] content;
 	Bucket bucketOverflow;
-	Bucket Next;
+	//Bucket next;
+	
+	public Bucket (int size) {
+		content = new BucketUnit[size];
+	}
+	
+	public void addKey (String key, Page pointer) {
+		
+	}
 	
 }
