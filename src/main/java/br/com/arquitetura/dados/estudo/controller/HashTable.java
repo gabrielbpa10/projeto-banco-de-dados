@@ -20,4 +20,9 @@ public class HashTable {
 		buckets[code].addKey(item, pointer);
 	}
 	
+	public Page search (String item) {
+		int bucketIndex = hashFunction.Run(item);
+		return buckets[bucketIndex].searchKey(item);
+	}
+	
 }

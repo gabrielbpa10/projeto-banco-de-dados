@@ -14,4 +14,8 @@ public class Bucket {
 		
 	}
 	
+	public Page searchKey (String key) {
+		
+	}
+	
 }

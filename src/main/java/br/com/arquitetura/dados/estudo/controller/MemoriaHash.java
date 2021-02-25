@@ -1,8 +1,5 @@
 package br.com.arquitetura.dados.estudo.controller;
 
-import java.util.LinkedList;
-import java.util.Random;
-
 import br.com.arquitetura.dados.estudo.model.Pessoa;
 
 public class MemoriaHash {
