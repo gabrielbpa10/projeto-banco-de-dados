@@ -15,9 +15,9 @@ public class HashTable {
 		this.buckets = new Bucket[bucketCount];
 	}
 	
-	public void addKey (String item) {
+	public void addKey (String item, Page pointer) {
 		int code = hashFunction.Run(item);
-		buckets[code].add(item); 
+		buckets[code].addKey(item, pointer);
 	}
 	
 }
