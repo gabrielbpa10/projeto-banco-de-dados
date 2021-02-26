@@ -1,7 +1,5 @@
 package br.com.arquitetura.dados.estudo.controller;
 
-import java.util.ArrayList;
-
 import Interfaces.IhashFunction;
 
 public class HashTable {
@@ -10,7 +8,8 @@ public class HashTable {
 	public IhashFunction hashFunction;
 	public int bucketSize;
 	
-	public HashTable (int bucketSize, int bucketCount) {
+	public HashTable (IhashFunction function, int bucketSize, int bucketCount) {
+		hashFunction = function;
 		this.bucketSize = bucketSize;
 		this.buckets = new Bucket[bucketCount];
 	}
