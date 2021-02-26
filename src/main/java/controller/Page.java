@@ -1,4 +1,4 @@
-package br.com.arquitetura.dados.estudo.controller;
+package controller;
 
 public class Page {
 	
