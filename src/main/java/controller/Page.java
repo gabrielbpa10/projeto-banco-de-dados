@@ -9,9 +9,10 @@ public class Page {
 		content = new String[size];
 	}
 
-	public boolean search (String word, boolean fullSearch) {
-		for (String item : content) if (item.equals(word)) return true;
-		return next == null ? false : next.search(word, fullSearch);
+	public Page search (String word, boolean fullSearch) {
+		for (String item : content) if (item.equals(word)) return this;
+		if (fullSearch) return next == null ? null : next.search(word, fullSearch);
+		return null;
 	}
 
 	public Page add (String word) throws Exception {
@@ -19,7 +20,7 @@ public class Page {
 		for (int i = 0; i < content.length; i++) {
 			if (content[i] == null) {
 				content[i] = word;
-				return null;
+				return this;
 			}
 		}
 		next = new Page(content.length);
