@@ -1,6 +1,7 @@
 package controller;
 
 import Interfaces.IhashFunction;
+import ReturnTypes.*;
 
 public class TableController {
 
@@ -15,15 +16,27 @@ public class TableController {
         this.lastPage = this.page;
     }
 
-    public void addRow (String item) throws Exception {
+    public Page insert (String item) throws Exception {
         Page newPage = lastPage.add(item);
         if (newPage == null) newPage = lastPage;
         hashTable.addKey(item, newPage);
+        return newPage;
     }
 
-    public boolean hasItem (String item) throws Exception {
-        Page itemPage = hashTable.search(item);
-        if (itemPage == null) return false;
-        return itemPage.search(item, false);
+    int getPageIndex (Page p) {
+        int pageIndex = -1;
+        Page pagePointer = page;
+        while (p != pagePointer) {
+            pagePointer = pagePointer.next;
+            pageIndex++;
+        }
+        return pageIndex;
+    }
+
+    public TableControllerSeachReturn select (String item) throws Exception {
+        HashTableSeachReturn r = hashTable.search(item);
+        if (r == null) return null;
+        int pageIndex = getPageIndex(r.foundPage);
+        return new TableControllerSeachReturn(r.foundPage, r.foundBucket, r.verticalBucketIndex, r.horizontalBucketIndex, r.contentIndex, pageIndex);
     }
 }
