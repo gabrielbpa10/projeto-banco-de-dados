@@ -10,4 +10,9 @@ public class TableControllerSeachReturn extends HashTableSeachReturn {
         super(p, b, vBucketIndex, hBucketIndex, contentIndex);
         this.pageIndex = pageIndex;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(vBucket: %d, hBucket: %d, contentIndex: %d, pageIndex: %d)", this.verticalBucketIndex, this.horizontalBucketIndex, this.contentIndex, this.pageIndex);
+    }
 }
