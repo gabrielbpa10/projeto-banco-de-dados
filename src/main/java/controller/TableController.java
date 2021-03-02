@@ -5,8 +5,8 @@ import ReturnTypes.*;
 
 public class TableController {
 
-    HashTable hashTable;
-    Page page, lastPage;
+    public HashTable hashTable;
+    public Page page, lastPage;
     int pageSize;
 
     public TableController (IhashFunction function, int bucketCount, int bucketSize, int pageSize) {
@@ -17,16 +17,23 @@ public class TableController {
     }
 
     public Page insert (String item) throws Exception {
+        if (select(item) != null) throw new Exception(String.format("Key (%s) already in hash table.", item));
         Page newPage = lastPage.add(item);
-        if (newPage == null) newPage = lastPage;
+        if (newPage == null) {
+            newPage = lastPage;
+        } else {
+            lastPage = newPage;
+        }
         hashTable.addKey(item, newPage);
         return newPage;
     }
 
-    int getPageIndex (Page p) {
-        int pageIndex = -1;
+    int getPageIndex (Page p) throws Exception {
+        if (p == null) throw new Exception("Cannot find index of null page.");
+        int pageIndex = 0;
         Page pagePointer = page;
         while (p != pagePointer) {
+            if (pagePointer == null) return -1;
             pagePointer = pagePointer.next;
             pageIndex++;
         }
