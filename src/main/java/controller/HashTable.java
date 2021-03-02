@@ -13,9 +13,12 @@ public class HashTable {
 		hashFunction = function;
 		this.bucketSize = bucketSize;
 		this.buckets = new Bucket[bucketCount];
+		for (int i = 0; i < bucketCount; i++) {
+			this.buckets[i] = new Bucket(this.bucketSize);
+		}
 	}
 	
-	public void addKey (String item, Page pointer) {
+	public void addKey (String item, Page pointer) throws Exception {
 		int code = hashFunction.Run(item);
 		buckets[code].addKey(item, pointer);
 	}
@@ -23,6 +26,7 @@ public class HashTable {
 	public HashTableSeachReturn search (String item) {
 		int bucketIndex = hashFunction.Run(item);
 		BucketSearchReturn r = buckets[bucketIndex].searchKey(item);
+		if (r == null) return null;
 		return new HashTableSeachReturn(r.foundPage, r.foundBucket, bucketIndex, r.horizontalBucketIndex, r.contentIndex);
 	}
 	
