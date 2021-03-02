@@ -6,7 +6,7 @@ public class IndiceHash {
 
     public static void main(String[] args) {
         MainWindow mw = new MainWindow();
-        mw.run();
+        mw.gui();
     }
 
     public static void log (Object obj) {
