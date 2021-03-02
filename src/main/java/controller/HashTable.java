@@ -1,6 +1,7 @@
-package br.com.arquitetura.dados.estudo.controller;
+package controller;
 
 import Interfaces.IhashFunction;
+import ReturnTypes.*;
 
 public class HashTable {
 	
@@ -19,9 +20,10 @@ public class HashTable {
 		buckets[code].addKey(item, pointer);
 	}
 	
-	public Page search (String item) {
+	public HashTableSeachReturn search (String item) {
 		int bucketIndex = hashFunction.Run(item);
-		return buckets[bucketIndex].searchKey(item);
+		BucketSearchReturn r = buckets[bucketIndex].searchKey(item);
+		return new HashTableSeachReturn(r.foundPage, r.foundBucket, bucketIndex, r.horizontalBucketIndex, r.contentIndex);
 	}
 	
 }
