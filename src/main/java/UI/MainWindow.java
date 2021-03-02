@@ -22,7 +22,7 @@ public class MainWindow implements ActionListener{
 	private JLabel acessLabel = new JLabel("Acessos:", JLabel.CENTER);
 	private JLabel acessCounterLabel = new JLabel("0", JLabel.CENTER);
 	
-	public gui() {
+	public void gui() {
 		
 		 JFrame frame = new JFrame("Projeto de Tabela Hash");
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
