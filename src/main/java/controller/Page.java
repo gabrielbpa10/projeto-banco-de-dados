@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Arrays;
+
 public class Page {
 	
 	String[] content;
@@ -24,13 +26,17 @@ public class Page {
 			}
 		}
 		next = new Page(content.length);
-		next.add(word);
-		return next;
+		return next.add(word);
 	}
 
 	public Page getLastPage () {
 		Page pointer = this;
 		while (pointer.next != null) pointer = pointer.next;
 		return pointer;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("(%s) -> %s", Arrays.toString(content), next == null ? "null" : next.toString());
 	}
 }
