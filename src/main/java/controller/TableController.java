@@ -16,7 +16,7 @@ public class TableController {
         this.lastPage = this.page;
     }
 
-    public Page insert (String item) throws Exception {
+    public TableControllerInsertReturn insert (String item) throws Exception {
         if (select(item) != null) throw new Exception(String.format("Key (%s) already in hash table.", item));
         Page newPage = lastPage.add(item);
         if (newPage == null) {
@@ -24,8 +24,7 @@ public class TableController {
         } else {
             lastPage = newPage;
         }
-        hashTable.addKey(item, newPage);
-        return newPage;
+        return new TableControllerInsertReturn(newPage, hashTable.addKey(item, newPage));
     }
 
     public void clear () {

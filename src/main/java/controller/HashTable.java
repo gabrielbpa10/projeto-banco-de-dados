@@ -18,9 +18,10 @@ public class HashTable {
 		}
 	}
 	
-	public void addKey (String item, Page pointer) throws Exception {
+	public int addKey (String item, Page pointer) throws Exception {
 		int code = hashFunction.Run(item);
 		buckets[code].addKey(item, pointer);
+		return code;
 	}
 
 	public void clear () {
