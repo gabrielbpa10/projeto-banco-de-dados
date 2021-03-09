@@ -35,6 +35,13 @@ public class Page {
 		return pointer;
 	}
 
+	public void clear () {
+		for (int i = 0; i < content.length; i++) {
+			content[i] = null;
+		}
+		next = null;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("(%s) -> %s", Arrays.toString(content), next == null ? "null" : next.toString());

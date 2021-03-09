@@ -36,6 +36,13 @@ public class Bucket {
 		return bucketOverflow.searchKey(key, currentBucketIndex+1); 
 	}
 
+	public void clear () {
+		for (int i = 0; i < content.length; i++) {
+			content[i] = null;
+		}
+		bucketOverflow = null;
+	}
+
 	@Override
 	public String toString() {
 		String a = "content:\n[";

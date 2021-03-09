@@ -28,6 +28,12 @@ public class TableController {
         return newPage;
     }
 
+    public void clear () {
+        page.clear();
+        lastPage = page;
+        hashTable.clear();
+    }
+
     int getPageIndex (Page p) throws Exception {
         if (p == null) throw new Exception("Cannot find index of null page.");
         int pageIndex = 0;

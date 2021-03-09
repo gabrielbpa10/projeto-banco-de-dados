@@ -22,6 +22,12 @@ public class HashTable {
 		int code = hashFunction.Run(item);
 		buckets[code].addKey(item, pointer);
 	}
+
+	public void clear () {
+		for (int i = 0; i < buckets.length; i++) {
+			this.buckets[i].clear();
+		}
+	}
 	
 	public HashTableSeachReturn search (String item) {
 		int bucketIndex = hashFunction.Run(item);

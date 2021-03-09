@@ -52,7 +52,8 @@ public class MainWindow implements ActionListener {
         loadProgressBar.setStringPainted(true);
         loadButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) throws Exception {  
+            public void actionPerformed(ActionEvent e) {
+                tableController.clear();
                 JFileChooser chooser = new JFileChooser();
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int result = chooser.showOpenDialog(frame);
