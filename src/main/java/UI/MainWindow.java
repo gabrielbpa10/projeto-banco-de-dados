@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainWindow implements ActionListener {
 
@@ -63,7 +64,7 @@ public class MainWindow implements ActionListener {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File f = chooser.getSelectedFile();
                     try {
-                        TextFileReader.ReadFile(f.getName(), (line) -> {
+                        TextFileReader.ReadFile(f.getPath(), (line) -> {
                             try {
                                 TableControllerInsertReturn r = tableController.insert(line);
                                 if (!dict.containsKey(r.bucketIndex)) dict.put(r.bucketIndex, 0);
@@ -75,6 +76,18 @@ public class MainWindow implements ActionListener {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
+                    int colissions = 0, overflows = 0;
+                    for (Map.Entry<Integer, Integer> entry : dict.entrySet()) {
+                        //Integer key = entry.getKey();
+                        Integer value = entry.getValue();
+                        if (value > 1) {
+                            colissions += value - 1;
+                        }
+                        overflows += Math.floor(value / tableController.hashTable.bucketSize);
+                        // ...
+                    }
+                    collisionCounterLabel.setText(colissions+"");
+                    overflowCounterLabel.setText(overflows+"");
                 }
             }
         });
