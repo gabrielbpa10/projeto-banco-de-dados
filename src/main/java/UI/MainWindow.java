@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import ReturnTypes.TableControllerInsertReturn;
+import controller.Bucket;
 import controller.TableController;
 import controller.TextFileReader;
 
@@ -26,7 +27,7 @@ public class MainWindow implements ActionListener {
 			e.printStackTrace();
 		}
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		tableController = new TableController((a) -> a.length() % 10, 10, 4, 3);
+		tableController = new TableController((a) -> a.length() % 10, 10, 10, 100);
 	}
 
 	public void run() {
@@ -78,6 +79,7 @@ public class MainWindow implements ActionListener {
 						ex.printStackTrace();
 					} finally {
 						loadProgressBar.setValue(100);
+						System.out.println(tableController.pageCount());
 					}
 					int colissions = 0, overflows = 0;
 					for (Map.Entry<Integer, Integer> entry : dict.entrySet()) {
@@ -102,10 +104,14 @@ public class MainWindow implements ActionListener {
 		frame.getContentPane().add(overflowCounterLabel);
 		frame.getContentPane().add(searchTextField);
 		searchButton.addActionListener(new ActionListener() {
+			private int acess;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					tableController.select(searchTextField.getText());
+					acess = Bucket.acess;
+					System.out.println(tableController.select(searchTextField.getText()));
+					acessCounterLabel.setText(Integer.toString(acess));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

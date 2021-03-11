@@ -12,7 +12,8 @@ public class Page {
 	}
 
 	public Page search (String word, boolean fullSearch) {
-		for (String item : content) if (item.equals(word)) return this;
+		for (String item : content) 
+			if (item.equals(word)) return this;
 		if (fullSearch) return next == null ? null : next.search(word, fullSearch);
 		return null;
 	}

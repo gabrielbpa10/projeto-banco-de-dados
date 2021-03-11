@@ -34,7 +34,7 @@ public class HashTable {
 		int bucketIndex = hashFunction.Run(item);
 		BucketSearchReturn r = buckets[bucketIndex].searchKey(item);
 		if (r == null) return null;
-		return new HashTableSeachReturn(r.foundPage, r.foundBucket, bucketIndex, r.horizontalBucketIndex, r.contentIndex);
+		return new HashTableSeachReturn(r.foundPage, r.foundBucket, bucketIndex, r.horizontalBucketIndex, r.contentIndex,r.acessCount);
 	}
 	
 }
