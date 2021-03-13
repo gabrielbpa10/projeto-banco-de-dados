@@ -97,7 +97,7 @@ public class MainWindow implements ActionListener {
 					closePopup();
 					
 				} else if(!pageSizeTextField.getText().equals(pageQuantityTextField.getText())){
-					// Aqui cria a table controller somente pela tamanho de paginas digitado pelo usuário
+					// Aqui cria a table controller somente pela "tamanho de pages" digitado pelo usuário
 					tableController = new TableController((a) -> a.length() % 10, 10, 10, Integer.parseInt(pageSizeTextField.getText()));
 					tableController.clear();
 				if (result == JFileChooser.APPROVE_OPTION) {
