@@ -8,7 +8,7 @@ public class TableController {
     public HashTable hashTable;
     public Page page, lastPage;
     int pageSize;
-    int countAcess = 0;
+    public int countAcess = 0;
 
     public TableController (IhashFunction function, int bucketCount, int bucketSize, int pageSize) {
         hashTable = new HashTable(function, bucketSize, bucketCount);

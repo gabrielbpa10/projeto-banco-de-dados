@@ -144,14 +144,12 @@ public class MainWindow implements ActionListener {
 		frame.getContentPane().add(overflowCounterLabel);
 		frame.getContentPane().add(searchTextField);
 		searchButton.addActionListener(new ActionListener() {
-			private int acess;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					acess = Bucket.acess;
 					System.out.println(tableController.select(searchTextField.getText()));
-					acessCounterLabel.setText(Integer.toString(acess));
+					acessCounterLabel.setText(Integer.toString(tableController.countAcess));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
