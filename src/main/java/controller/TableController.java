@@ -19,6 +19,7 @@ public class TableController {
 
     public TableControllerInsertReturn insert (String item) throws Exception {
         if (select(item) != null) throw new Exception(String.format("Key (%s) already in hash table.", item));
+        System.out.println(item);
         Page newPage = lastPage.add(item);
         if (newPage == null) {
             newPage = lastPage;
