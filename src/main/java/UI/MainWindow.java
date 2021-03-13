@@ -78,23 +78,13 @@ public class MainWindow implements ActionListener {
 				int index = 0;
 				HashMap<Integer, Integer> dict = new HashMap<Integer, Integer>();
 				
-				if(!pageSizeTextField.getText().equals("") && !pageQuantityTextField.getText().equals("")) {
-					System.out.println("Informe apenas quantidade de páginas ou tamanho de páginas");
-					buttonPop = new JButton("OK");
-					JFrame f = new JFrame("Atenção!!!");
-					JLabel l = new JLabel("Informe apenas quantidade de páginas ou tamanho de páginas.");
-					f.setSize(200,200);
-					buttonPop.addActionListener(this);
-					
-					
-					PopupFactory pf = new PopupFactory();
-					JPanel p2 = new JPanel();
-					p2.add(l);
-					p2.add(buttonPop);
-					p2.setSize(400,400);
-					p = pf.getPopup(f, p2, 580, 100);
-					p.show();
-					closePopup();
+				if(!pageSizeTextField.getText().equals("") && !pageQuantityTextField.getText().equals("")
+						|| pageSizeTextField.getText().equals("") && pageQuantityTextField.getText().equals("")) {
+					JFrame frame = new JFrame("Atenção!!!");
+					JOptionPane.showMessageDialog(frame, "Informe apenas quantidade de páginas ou tamanho de páginas");
+					pageSizeTextField.setText("");
+					pageQuantityTextField.setText("");
+					loadButton.removeAll();
 					
 				} else if(!pageSizeTextField.getText().equals(pageQuantityTextField.getText())){
 					// Aqui cria a table controller somente pela "tamanho de pages" digitado pelo usuário
@@ -168,29 +158,6 @@ public class MainWindow implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
-	
-	public void closePopup() {
-		if(buttonPop !=  null) {
-	buttonPop.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent arg) {
-			String click = arg.getActionCommand();
-			System.out.println(click);
-			if(click.equals("OK")) {
-				System.out.println("Entrou!");
-				pageSizeTextField.setText("");
-				pageQuantityTextField.setText("");
-				loadButton.removeAll();
-				p.hide();
-				
-			}
-			
-		}
-	});
-	}}
-
 }
