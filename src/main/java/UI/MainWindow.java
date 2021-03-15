@@ -1,7 +1,6 @@
 package UI;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 
 import ReturnTypes.TableControllerInsertReturn;
 import controller.TableController;
@@ -26,7 +25,7 @@ public class MainWindow implements ActionListener {
             e.printStackTrace();
         }
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        tableController = new TableController((a) -> a.length() % 10, 10, 4, 3);
+        tableController = new TableController((a) -> a.length() % 10, 10, 10, 100);
     }
 
     public void run() {
@@ -75,6 +74,8 @@ public class MainWindow implements ActionListener {
                         });
                     } catch (Exception ex) {
                         ex.printStackTrace();
+                    } finally {
+                        System.out.println(tableController.pageCount());
                     }
                     int colissions = 0, overflows = 0;
                     for (Map.Entry<Integer, Integer> entry : dict.entrySet()) {
