@@ -19,7 +19,7 @@ public class Bucket {
 				return;
 			}
 		}
-		bucketOverflow = new Bucket(content.length);
+		if (bucketOverflow == null) bucketOverflow = new Bucket(content.length);
 		bucketOverflow.addKey(key, pointer);
 	}
 	
