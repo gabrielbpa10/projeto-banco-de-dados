@@ -6,6 +6,7 @@ public class Bucket {
 	
 	public BucketUnit[] content;
 	public Bucket bucketOverflow;
+	public static int acess = 0;
 	
 	public Bucket (int size) {
 		if (size < 1) size = 100;
@@ -28,11 +29,15 @@ public class Bucket {
 	}
 
 	BucketSearchReturn searchKey (String key, int currentBucketIndex) {
+		int acessCount = 0;
 		for (int i = 0; i < content.length; i++) {
 			BucketUnit unit = content[i];
-			if (unit != null && unit.key.equals(key)) return new BucketSearchReturn(unit.pagePointer, this, currentBucketIndex, i);
+			acessCount +=1;
+			if (unit != null && unit.key.equals(key))return new BucketSearchReturn(unit.pagePointer, this, currentBucketIndex, i,acessCount);
 		}
-		if (bucketOverflow == null) return null;
+		if (bucketOverflow == null) {
+			return null;
+		}
 		return bucketOverflow.searchKey(key, currentBucketIndex+1); 
 	}
 

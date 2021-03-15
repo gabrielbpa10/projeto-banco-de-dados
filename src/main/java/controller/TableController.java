@@ -8,6 +8,7 @@ public class TableController {
     public HashTable hashTable;
     public Page page, lastPage;
     int pageSize;
+    public int countAcess = 0;
 
     public TableController (IhashFunction function, int bucketCount, int bucketSize, int pageSize) {
         hashTable = new HashTable(function, bucketSize, bucketCount);
@@ -18,6 +19,7 @@ public class TableController {
 
     public TableControllerInsertReturn insert (String item) throws Exception {
         if (select(item) != null) throw new Exception(String.format("Key (%s) already in hash table.", item));
+        System.out.println(item);
         Page newPage = lastPage.add(item);
         if (newPage == null) {
             newPage = lastPage;
@@ -55,9 +57,21 @@ public class TableController {
     }
 
     public TableControllerSeachReturn select (String item) throws Exception {
-        HashTableSeachReturn r = hashTable.search(item);
+        int count = 0;
+    	HashTableSeachReturn r = hashTable.search(item);
         if (r == null) return null;
+        countAcess += 1;
         int pageIndex = getPageIndex(r.foundPage);
-        return new TableControllerSeachReturn(r.foundPage, r.foundBucket, r.verticalBucketIndex, r.horizontalBucketIndex, r.contentIndex, pageIndex);
+        return new TableControllerSeachReturn(r.foundPage, r.foundBucket, r.verticalBucketIndex, r.horizontalBucketIndex, r.contentIndex, pageIndex, countAcess);
+    }
+    
+    public int pageCount () {
+        int count = 0;
+        Page pointer = page;
+        while (pointer != null) {
+            pointer = pointer.next;
+            count++;
+        }
+        return count;
     }
 }
