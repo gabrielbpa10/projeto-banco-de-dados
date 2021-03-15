@@ -3,15 +3,12 @@ package UI;
 import javax.swing.*;
 
 import ReturnTypes.TableControllerInsertReturn;
-import controller.Bucket;
 import controller.TableController;
 import controller.TextFileReader;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeListenerProxy;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +53,6 @@ public class MainWindow implements ActionListener {
 	private JLabel acessLabel = new JLabel("Acessos:", JLabel.CENTER);
 	private JLabel acessCounterLabel = new JLabel("0", JLabel.CENTER);
 
-	private JButton buttonPop;
 	Popup p;
 	
 	public void gui() {
@@ -73,7 +69,6 @@ public class MainWindow implements ActionListener {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int result = chooser.showOpenDialog(frame);
-				int index = 0;
 				HashMap<Integer, Integer> dict = new HashMap<Integer, Integer>();
 				
 				if(!pageSizeTextField.getText().equals("") && !pageQuantityTextField.getText().equals("")

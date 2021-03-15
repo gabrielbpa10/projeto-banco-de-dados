@@ -48,7 +48,6 @@ public class TableController {
     }
 
     public TableControllerSeachReturn select (String item) throws Exception {
-        int count = 0;
     	HashTableSeachReturn r = hashTable.search(item);
         if (r == null) return null;
         countAcess += 1;
