@@ -29,15 +29,6 @@ public class TableController {
         return new TableControllerInsertReturn(newPage, hashTable.addKey(item, newPage));
     }
 
-    public int pageCount () {
-		int count = 0;
-		Page pointer = page;
-		while (pointer != null) {
-            pointer = pointer.next;
-		}
-		return count;
-	}
-
     public void clear () {
         page.clear();
         lastPage = page;
