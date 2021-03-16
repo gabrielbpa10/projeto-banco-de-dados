@@ -92,8 +92,7 @@ public class MainWindow implements ActionListener {
 			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			int result = chooser.showOpenDialog(frame);
 			HashMap<Integer, Integer> dict = new HashMap<Integer, Integer>();
-			if (!pageSizeTextField.getText().equals("") && !pageQuantityTextField.getText().equals("")
-					|| pageSizeTextField.getText().equals("") && pageQuantityTextField.getText().equals("")) {
+			if (pageSizeTextField.getText().equals("") && pageQuantityTextField.getText().equals("")) {
 				JFrame frame = new JFrame("Atenção!!!");
 				JOptionPane.showMessageDialog(frame, "Informe apenas quantidade de páginas ou tamanho de páginas");
 				reset();
@@ -113,7 +112,7 @@ public class MainWindow implements ActionListener {
 								TableControllerInsertReturn r = tableController.insert(line);
 								if (!dict.containsKey(r.bucketIndex))
 									dict.put(r.bucketIndex, 0);
-								dict.put(r.bucketIndex, dict.get(r.bucketIndex));
+								dict.put(r.bucketIndex, dict.get(r.bucketIndex)+1);
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
@@ -121,7 +120,10 @@ public class MainWindow implements ActionListener {
 							loadProgressBar.setValue(100);
 							int colissions = 0, overflows = 0;
 							for (Map.Entry<Integer, Integer> entry : dict.entrySet()) {
+								Integer key = entry.getKey();
+								System.out.println(key);
 								Integer value = entry.getValue();
+								System.out.println(value);
 								if (value > 1)
 									colissions += value - 1;
 								overflows += Math.floor(value / tableController.hashTable.bucketSize);
