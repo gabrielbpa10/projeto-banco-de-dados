@@ -26,7 +26,6 @@ public class MainWindow implements ActionListener {
 			e.printStackTrace();
 		}
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		// tableController = new TableController((a) -> a.length() % 10, 10, 10, 100);
 	}
 
 	public void run() {
@@ -62,7 +61,6 @@ public class MainWindow implements ActionListener {
 		overflowCounterLabel.setText("");
 		collisionCounterLabel.setText("");
 		loadProgressBar.setValue(0);
-		// loadButton.removeAll();
 	}
 
 	TableControllerMode getTableControllerMode() {
@@ -97,12 +95,10 @@ public class MainWindow implements ActionListener {
 				JOptionPane.showMessageDialog(frame, "Informe apenas quantidade de páginas ou tamanho de páginas");
 				reset();
 			} else if (!pageSizeTextField.getText().equals(pageQuantityTextField.getText())) {
-				// Aqui cria a table controller somente pela "tamanho de pages" digitado pelo
-				// usuário
 				int bucketCount = 10;
 				int bucketSize = 10;
 				try {
-					tableController = new TableController((a) -> a.length() % 10, bucketCount, bucketSize,
+					tableController = new TableController((a) -> a.chars().sum() % 10, bucketCount, bucketSize,
 							getTableControllerMode(), getPageValue());
 					if (result == JFileChooser.APPROVE_OPTION) {
 						File f = chooser.getSelectedFile();
