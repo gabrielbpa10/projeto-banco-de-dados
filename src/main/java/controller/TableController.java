@@ -1,5 +1,6 @@
 package controller;
 
+import Enums.TableControllerMode;
 import Interfaces.IhashFunction;
 import ReturnTypes.*;
 
@@ -7,26 +8,40 @@ public class TableController {
 
     public HashTable hashTable;
     public Page page, lastPage;
-    int pageSize;
-    public int countAcess = 0;
+    Integer pageAmount;
+    Integer pageIndex = 0;
+    public int accessCounter = 0;
 
-    public TableController (IhashFunction function, int bucketCount, int bucketSize, int pageSize) {
+    public TableController (IhashFunction function, int bucketCount, int bucketSize, TableControllerMode mode, int pageValue) throws Exception {
         hashTable = new HashTable(function, bucketSize, bucketCount);
-        this.pageSize = pageSize;
-        this.page = new Page(pageSize);
+        if (mode == TableControllerMode.FixedPageAmount) {
+            this.pageAmount = pageValue;
+        } else if (mode == TableControllerMode.FixedPageSize) {
+            this.page = new Page(pageValue);
+        } else {
+            throw new Exception("Invalid mode.");
+        }
         this.lastPage = this.page;
     }
 
     public TableControllerInsertReturn insert (String item) throws Exception {
         if (select(item) != null) throw new Exception(String.format("Key (%s) already in hash table.", item));
-        System.out.println(item);
-        Page newPage = lastPage.add(item);
-        if (newPage == null) {
-            newPage = lastPage;
+        if (pageAmount == null) {
+            Page newPage = lastPage.add(item);
+            if (newPage == null) {
+                newPage = lastPage;
+            } else {
+                lastPage = newPage;
+            }
+            return new TableControllerInsertReturn(newPage, hashTable.addKey(item, newPage));
         } else {
-            lastPage = newPage;
+            if (pageIndex > pageAmount) {
+                pageIndex = 0;
+            }
+            Page page = getNthPage(pageIndex++);
+            page = page.add(item);
+            return new TableControllerInsertReturn(page, hashTable.addKey(item, page));
         }
-        return new TableControllerInsertReturn(newPage, hashTable.addKey(item, newPage));
     }
 
     public void clear () {
@@ -50,9 +65,9 @@ public class TableController {
     public TableControllerSeachReturn select (String item) throws Exception {
     	HashTableSeachReturn r = hashTable.search(item);
         if (r == null) return null;
-        countAcess += 1;
+        accessCounter += 1;
         int pageIndex = getPageIndex(r.foundPage);
-        return new TableControllerSeachReturn(r.foundPage, r.foundBucket, r.verticalBucketIndex, r.horizontalBucketIndex, r.contentIndex, pageIndex, countAcess);
+        return new TableControllerSeachReturn(r.foundPage, r.foundBucket, r.verticalBucketIndex, r.horizontalBucketIndex, r.contentIndex, pageIndex, accessCounter);
     }
     
     public int pageCount () {
@@ -63,5 +78,15 @@ public class TableController {
             count++;
         }
         return count;
+    }
+
+    public Page getNthPage (int index) {
+        int count = 0;
+        Page pointer = page;
+        while (pointer != null) {
+            if (count++ == index) return pointer;
+            pointer = pointer.next;
+        }
+        return null;
     }
 }

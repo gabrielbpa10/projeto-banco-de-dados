@@ -1,15 +1,21 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import Utils.StringUtil;
+
 public class Page {
-	
-	String[] content;
+
+	ArrayList<String> content = new ArrayList<String>();
 	Page next;
+	Integer maxSize;
 	
 	public Page (int size) {
-		content = new String[size];
+		maxSize = size;
 	}
+
+	public Page () {}
 
 	public Page search (String word, boolean fullSearch) {
 		for (String item : content) 
@@ -20,14 +26,18 @@ public class Page {
 
 	public Page add (String word) throws Exception {
 		if (word == null) throw new Exception("Null strings not allowed.");
-		for (int i = 0; i < content.length; i++) {
-			if (content[i] == null) {
-				content[i] = word;
+		if (maxSize == null) {
+			content.add(word);
+			return this;
+		} else {
+			if (content.size() < maxSize) {
+				content.add(word);
 				return this;
+			} else {
+				next = new Page(content.size());
+				return next.add(word);
 			}
 		}
-		next = new Page(content.length);
-		return next.add(word);
 	}
 
 	public Page getLastPage () {
@@ -37,14 +47,12 @@ public class Page {
 	}
 
 	public void clear () {
-		for (int i = 0; i < content.length; i++) {
-			content[i] = null;
-		}
+		content.clear();
 		next = null;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("(%s) -> %s", Arrays.toString(content), next == null ? "null" : next.toString());
+		return String.format("(%s) -> %s", StringUtil.toString(content), next == null ? "null" : next.toString());
 	}
 }
