@@ -28,6 +28,16 @@ public class Bucket {
 		return searchKey(key, 0);
 	}
 
+	public int count (boolean local) {
+		int counter = 0;
+		for (int i = 0; i < content.length; i++) {
+			if (content[i] == null) break;
+			counter++; 
+		}
+		if (!local && bucketOverflow != null) counter += bucketOverflow.count(local);
+		return counter;
+	}
+
 	BucketSearchReturn searchKey (String key, int currentBucketIndex) {
 		int acessCount = 0;
 		for (int i = 0; i < content.length; i++) {
@@ -46,6 +56,18 @@ public class Bucket {
 			content[i] = null;
 		}
 		bucketOverflow = null;
+	}
+
+	public String print () {
+		String a = "[";
+		for (int i = 0; i < this.content.length; i++) {
+			BucketUnit unit = this.content[i];
+			a += (unit == null ? "null" : unit.key);
+			if (i < this.content.length - 1) a +=  ", ";
+		}
+		a += "] -> " + (this.bucketOverflow == null? "null" : "overflow");
+
+		return a;
 	}
 
 	@Override

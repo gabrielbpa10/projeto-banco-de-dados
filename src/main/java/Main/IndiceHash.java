@@ -1,11 +1,14 @@
 package Main;
 
 import UI.MainWindow;
+import UI.NewMainWindow;
 
 public class IndiceHash {
 
     public static void main(String[] args) throws Exception {
-        MainWindow mw = new MainWindow();
+        // MainWindow mw = new MainWindow();
+        // mw.gui();
+        NewMainWindow mw = new NewMainWindow();
         mw.gui();
     }
 

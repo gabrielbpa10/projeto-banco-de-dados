@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import Enums.TableControllerMode;
 import ReturnTypes.TableControllerInsertReturn;
+import controller.Bucket;
 import controller.TableController;
 import controller.TextFileReader;
 
@@ -84,7 +85,8 @@ public class MainWindow implements ActionListener {
 	public void gui() {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// frame.setSize(400, 400);
-		frame.getContentPane().setLayout(new GridLayout(7, 2, 10, 10));
+		Container c = frame.getContentPane();
+		c.setLayout(new GridLayout(7, 2, 10, 10));
 		loadButton = new JButton("Carregar");
 		loadProgressBar.setStringPainted(true);
 		loadButton.addActionListener((e) -> {
@@ -100,7 +102,7 @@ public class MainWindow implements ActionListener {
 				// Aqui cria a table controller somente pela "tamanho de pages" digitado pelo
 				// usuário
 				int bucketCount = 10;
-				int bucketSize = 10;
+				int bucketSize = 20;
 				try {
 					tableController = new TableController((a) -> a.length() % 10, bucketCount, bucketSize,
 							getTableControllerMode(), getPageValue());
@@ -112,58 +114,62 @@ public class MainWindow implements ActionListener {
 								TableControllerInsertReturn r = tableController.insert(line);
 								if (!dict.containsKey(r.bucketIndex))
 									dict.put(r.bucketIndex, 0);
-								dict.put(r.bucketIndex, dict.get(r.bucketIndex)+1);
+								dict.put(r.bucketIndex, dict.get(r.bucketIndex) + 1);
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
 						}, () -> {
-							loadProgressBar.setValue(100);
-							int colissions = 0, overflows = 0;
-							for (Map.Entry<Integer, Integer> entry : dict.entrySet()) {
-								Integer key = entry.getKey();
-								System.out.println(key);
-								Integer value = entry.getValue();
-								System.out.println(value);
-								if (value > 1)
-									colissions += value - 1;
-								overflows += Math.floor(value / tableController.hashTable.bucketSize);
-							}
-							collisionCounterLabel.setText(colissions + "");
-							overflowCounterLabel.setText(overflows + "");
 						});
+						loadProgressBar.setValue(100);
+						int colissions = 0, overflows = 0;
+						for (Map.Entry<Integer, Integer> entry : dict.entrySet()) {
+							Integer key = entry.getKey();
+							System.out.println(key);
+							Integer value = entry.getValue();
+							System.out.println(value);
+							if (value > 1)
+								colissions += value - 1;
+							overflows += Math.floor(value / tableController.hashTable.bucketSize);
+						}
+						collisionCounterLabel.setText(colissions + "");
+						overflowCounterLabel.setText(overflows + "");
+						Bucket[] b = tableController.hashTable.buckets;
+						for (int i = 0; i < b.length; i++) {
+							System.out.println("[" + i + "]" + b[i].count());
+						}
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		});
-		frame.getContentPane().add(pageSize);
-		frame.getContentPane().add(pageSizeTextField);
-		frame.getContentPane().add(pageQuantity);
-		frame.getContentPane().add(pageQuantityTextField);
-		frame.getContentPane().add(loadButton);
-		frame.getContentPane().add(loadProgressBar);
-		frame.getContentPane().add(collisionLabel);
-		frame.getContentPane().add(collisionCounterLabel);
-		frame.getContentPane().add(overflowLabel);
-		frame.getContentPane().add(overflowCounterLabel);
-		frame.getContentPane().add(searchTextField);
-		searchButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					System.out.println(tableController.select(searchTextField.getText()));
-					acessCounterLabel.setText(Integer.toString(tableController.accessCounter));
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+		c.add(pageSize);
+		c.add(pageSizeTextField);
+		c.add(pageQuantity);
+		c.add(pageQuantityTextField);
+		c.add(loadButton);
+		c.add(loadProgressBar);
+		c.add(collisionLabel);
+		c.add(collisionCounterLabel);
+		c.add(overflowLabel);
+		c.add(overflowCounterLabel);
+		c.add(searchTextField);
+		searchButton.addActionListener((e) -> {
+			try {
+				System.out.println(tableController.select(searchTextField.getText()));
+				acessCounterLabel.setText(Integer.toString(tableController.accessCounter));
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
 		});
-		frame.getContentPane().add(searchButton);
-		frame.getContentPane().add(acessLabel);
-		frame.getContentPane().add(acessCounterLabel);
-
+		c.add(searchButton);
+		c.add(acessLabel);
+		c.add(acessCounterLabel);
+		// c.add(new JLabel("Buckets"));
+		// JList<JLabel> list = new JList<JLabel>();
+		// list.add(new JLabel("111"));
+		// JScrollPane pane = new JScrollPane(list);
+		// c.add(pane);
 		// button.addActionListener(this);
 
 		frame.pack();

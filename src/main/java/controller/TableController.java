@@ -89,4 +89,24 @@ public class TableController {
         }
         return null;
     }
+
+    public Bucket getNthBucket (int vindex, int hindex) {
+        int counter = 0;
+        Bucket b = this.hashTable.buckets[vindex];
+        while (b != null) {
+            if (counter++ == hindex) {
+                return b;
+            }
+            b = b.bucketOverflow;
+        }
+        return null;
+    }
+
+    public Bucket[] getNthBuckets (int hindex) {
+        Bucket[] bs= new Bucket[this.hashTable.buckets.length];
+        for (int i = 0; i < this.hashTable.buckets.length; i++) {
+            bs[i] = getNthBucket(i, hindex);
+        }
+        return bs;
+    }
 }
