@@ -131,7 +131,7 @@ public class MainWindow implements ActionListener {
 						overflowCounterLabel.setText(overflows + "");
 						Bucket[] b = tableController.hashTable.buckets;
 						for (int i = 0; i < b.length; i++) {
-							System.out.println("[" + i + "]" + b[i].count());
+							System.out.println("[" + i + "]" + b[i].count(true));
 						}
 					}
 				} catch (Exception ex) {
